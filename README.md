@@ -56,8 +56,8 @@ This project is a REST API built using Flask. It includes user authentication, a
 ## ⚙️ Installation
 
 ```bash
-git clone <your-repo-link>
-cd <your-project-folder>
+git clone https://github.com/aqilmehaboob-ops/flask-jwt-blog-api.git
+cd Flask rest api project
 pip install -r requirements.txt
 ```
 
