@@ -3,7 +3,7 @@ from . import db
 class Users(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(300))
 
     posts = db.relationship("Posts", backref="author", cascade="all, delete")
 
@@ -12,7 +12,6 @@ class Users(db.Model):
             "id": self.id,
             "name": self.name
         }
-
 
 
 

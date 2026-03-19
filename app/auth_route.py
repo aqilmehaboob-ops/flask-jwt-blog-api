@@ -18,16 +18,16 @@ def register():
 
     name = data.get('name')
     if not name:
-        return jsonify({"error": "Please type a name"})
+        return jsonify({"error": "Please type a name"}), 400
     password = data.get('password')
     if not password:
-        return jsonify({"error": "please provide a password"})
+        return jsonify({"error": "please provide a password"}), 400
     
     hashed_password = generate_password_hash(password)
 
     existing_username = Users.query.filter_by(name=name).first()
     if existing_username:
-        return jsonify({"message": "name already exists"})
+        return jsonify({"message": "name already exists"}), 400
 
     user = Users(name=name, password=hashed_password)
 
@@ -37,7 +37,7 @@ def register():
     return jsonify({
         "message": "registration completed",
         "user": user.to_dict()
-        })
+        }), 201
 
 
 

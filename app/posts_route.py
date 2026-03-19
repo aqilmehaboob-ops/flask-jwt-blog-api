@@ -12,12 +12,12 @@ def createpost():
     current_user = get_jwt_identity()
 
     if not request.is_json:
-        return jsonify({"error": "request must be in json"})
+        return jsonify({"error": "request must be in json"}), 400
 
     data = request.get_json()
     title = data.get('title')
     if not title:
-        return jsonify({"error": "please provide title"})
+        return jsonify({"error": "please provide title"}), 400
 
     post = Posts(title=title, user_id=current_user)
 
@@ -32,9 +32,13 @@ def createpost():
 @jwt_required()
 def allposts():
 
-    posts = Posts.query.all()
+    page = request.args.get('page', 1, type=int)
+    limit = request.args.get('limit', 5, type=int)
+    offset = (page - 1) * limit
+
+    posts = Posts.query.offset(offset).limit(limit).all()
     
-    return jsonify([post.to_dict() for post in posts])
+    return jsonify([post.to_dict() for post in posts]), 200
 
 
 @posts.route("/users/<int:user_id>/posts", methods=['GET'])
@@ -44,7 +48,7 @@ def userposts(user_id):
     user = Users.query.get_or_404(user_id)
     posts = user.posts
     
-    return jsonify([post.to_dict() for post in posts])
+    return jsonify([post.to_dict() for post in posts]), 200
 
     
 @posts.route("/users/posts/<int:post_id>", methods=['GET'])

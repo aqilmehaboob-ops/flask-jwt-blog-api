@@ -14,8 +14,8 @@ def all_users():
 
     for user in all_user:
         result.append({
-            "userid": user.id,
-            "username": user.name
+            "id": user.id,
+            "name": user.name
         })
 
     return jsonify(result), 200
@@ -46,7 +46,7 @@ def updateuser():
 
     name = data.get('name')
     if not name:
-        return {"error": "name is required"}, 400  
+        return {"error": "use name as a key"}, 400  
     user.name = name
 
     db.session.commit()
