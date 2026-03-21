@@ -28,6 +28,10 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(users)
 
+    @app.route("/")
+    def home():
+        return {"message": "API is running"}
+
     return app
 
 
